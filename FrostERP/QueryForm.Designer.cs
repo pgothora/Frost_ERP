@@ -5,8 +5,6 @@
         private System.ComponentModel.IContainer components = null;
 
         private GroupBox grpSearch;
-        private Label lblQueryType;
-        private ComboBox cmbQueryType;
         private Label lblSearchValue;
         private TextBox txtSearchValue;
         private Label lblWarehouse;
@@ -25,115 +23,150 @@
 
         private void InitializeComponent()
         {
-            this.grpSearch = new System.Windows.Forms.GroupBox();
-            this.lblQueryType = new System.Windows.Forms.Label();
-            this.cmbQueryType = new System.Windows.Forms.ComboBox();
-            this.lblSearchValue = new System.Windows.Forms.Label();
-            this.txtSearchValue = new System.Windows.Forms.TextBox();
-            this.lblWarehouse = new System.Windows.Forms.Label();
-            this.cmbWarehouse = new System.Windows.Forms.ComboBox();
-            this.btnExecute = new System.Windows.Forms.Button();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.dgvResults = new System.Windows.Forms.DataGridView();
-            this.lblStatus = new System.Windows.Forms.Label();
-
-            this.grpSearch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
-            this.SuspendLayout();
-
-            // === SEARCH GROUP BOX ===
-            this.grpSearch.Controls.Add(this.lblQueryType);
-            this.grpSearch.Controls.Add(this.cmbQueryType);
-            this.grpSearch.Controls.Add(this.lblSearchValue);
-            this.grpSearch.Controls.Add(this.txtSearchValue);
-            this.grpSearch.Controls.Add(this.lblWarehouse);
-            this.grpSearch.Controls.Add(this.cmbWarehouse);
-            this.grpSearch.Controls.Add(this.btnExecute);
-            this.grpSearch.Controls.Add(this.btnClear);
-            this.grpSearch.Location = new System.Drawing.Point(15, 12);
-            this.grpSearch.Size = new System.Drawing.Size(950, 135);
-            this.grpSearch.Text = "Search Criteria";
-            this.grpSearch.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.grpSearch.ForeColor = System.Drawing.Color.DarkSlateGray;
-
-            // Labels & Controls inside GroupBox
-            this.lblQueryType.AutoSize = true;
-            this.lblQueryType.Location = new System.Drawing.Point(20, 28);
-            this.lblQueryType.Text = "Query Type:";
-
-            this.cmbQueryType.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cmbQueryType.Location = new System.Drawing.Point(130, 25);
-            this.cmbQueryType.Size = new System.Drawing.Size(280, 25);
-            this.cmbQueryType.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-
-            this.lblSearchValue.AutoSize = true;
-            this.lblSearchValue.Location = new System.Drawing.Point(20, 62);
-            this.lblSearchValue.Text = "Search (SKU / Name):";
-
-            this.txtSearchValue.Location = new System.Drawing.Point(130, 59);
-            this.txtSearchValue.Size = new System.Drawing.Size(280, 25);
-            this.txtSearchValue.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-
-            this.lblWarehouse.AutoSize = true;
-            this.lblWarehouse.Location = new System.Drawing.Point(20, 96);
-            this.lblWarehouse.Text = "Warehouse:";
-
-            this.cmbWarehouse.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cmbWarehouse.Location = new System.Drawing.Point(130, 93);
-            this.cmbWarehouse.Size = new System.Drawing.Size(280, 25);
-            this.cmbWarehouse.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-
-            // Buttons
-            this.btnExecute.Location = new System.Drawing.Point(430, 25);
-            this.btnExecute.Size = new System.Drawing.Size(140, 40);
-            this.btnExecute.Text = "🔍 Execute Query";
-            this.btnExecute.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnExecute.BackColor = System.Drawing.Color.FromArgb(0, 122, 204);
-            this.btnExecute.ForeColor = System.Drawing.Color.White;
-            this.btnExecute.FlatStyle = FlatStyle.Flat;
-
-            this.btnClear.Location = new System.Drawing.Point(430, 80);
-            this.btnClear.Size = new System.Drawing.Size(140, 35);
-            this.btnClear.Text = "🗑 Clear";
-            this.btnClear.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnClear.BackColor = System.Drawing.Color.LightGray;
-
-            // DataGridView
-            this.dgvResults.Location = new System.Drawing.Point(15, 160);
-            this.dgvResults.Size = new System.Drawing.Size(950, 420);
-            this.dgvResults.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvResults.ReadOnly = true;
-            this.dgvResults.AllowUserToAddRows = false;
-            this.dgvResults.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
-            this.dgvResults.Font = new System.Drawing.Font("Segoe UI", 9.25F);
-            this.dgvResults.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.dgvResults.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(0, 122, 204);
-            this.dgvResults.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
-            this.dgvResults.EnableHeadersVisualStyles = false;
-
-            // Status
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(20, 595);
-            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.lblStatus.ForeColor = System.Drawing.Color.Green;
-            this.lblStatus.Text = "Ready";
-
-            // Form
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.ClientSize = new System.Drawing.Size(980, 630);
-            this.Controls.Add(this.grpSearch);
-            this.Controls.Add(this.dgvResults);
-            this.Controls.Add(this.lblStatus);
-            this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = System.Drawing.Color.WhiteSmoke;
-
-            this.grpSearch.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            grpSearch = new GroupBox();
+            lblSearchValue = new Label();
+            txtSearchValue = new TextBox();
+            lblWarehouse = new Label();
+            cmbWarehouse = new ComboBox();
+            btnExecute = new Button();
+            btnClear = new Button();
+            dgvResults = new DataGridView();
+            lblStatus = new Label();
+            grpSearch.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvResults).BeginInit();
+            SuspendLayout();
+            // 
+            // grpSearch
+            // 
+            grpSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            grpSearch.Controls.Add(lblSearchValue);
+            grpSearch.Controls.Add(txtSearchValue);
+            grpSearch.Controls.Add(lblWarehouse);
+            grpSearch.Controls.Add(cmbWarehouse);
+            grpSearch.Controls.Add(btnExecute);
+            grpSearch.Controls.Add(btnClear);
+            grpSearch.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            grpSearch.ForeColor = Color.DarkSlateGray;
+            grpSearch.Location = new Point(15, 12);
+            grpSearch.Name = "grpSearch";
+            grpSearch.Size = new Size(950, 135);
+            grpSearch.TabIndex = 0;
+            grpSearch.TabStop = false;
+            grpSearch.Text = "Search Criteria";
+            // 
+            // lblSearchValue
+            // 
+            lblSearchValue.AutoSize = true;
+            lblSearchValue.Location = new Point(20, 35);
+            lblSearchValue.Name = "lblSearchValue";
+            lblSearchValue.Size = new Size(173, 21);
+            lblSearchValue.TabIndex = 2;
+            lblSearchValue.Text = "Search (SKU / Name):";
+            // 
+            // txtSearchValue
+            // 
+            txtSearchValue.Font = new Font("Segoe UI", 9.5F);
+            txtSearchValue.Location = new Point(199, 30);
+            txtSearchValue.Name = "txtSearchValue";
+            txtSearchValue.Size = new Size(211, 29);
+            txtSearchValue.TabIndex = 3;
+            // 
+            // lblWarehouse
+            // 
+            lblWarehouse.AutoSize = true;
+            lblWarehouse.Location = new Point(20, 87);
+            lblWarehouse.Name = "lblWarehouse";
+            lblWarehouse.Size = new Size(99, 21);
+            lblWarehouse.TabIndex = 4;
+            lblWarehouse.Text = "Warehouse:";
+            // 
+            // cmbWarehouse
+            // 
+            cmbWarehouse.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbWarehouse.Font = new Font("Segoe UI", 9.5F);
+            cmbWarehouse.Location = new Point(130, 84);
+            cmbWarehouse.Name = "cmbWarehouse";
+            cmbWarehouse.Size = new Size(280, 29);
+            cmbWarehouse.TabIndex = 5;
+            // 
+            // btnExecute
+            // 
+            btnExecute.BackColor = Color.FromArgb(0, 122, 204);
+            btnExecute.FlatStyle = FlatStyle.Flat;
+            btnExecute.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnExecute.ForeColor = Color.White;
+            btnExecute.Location = new Point(430, 25);
+            btnExecute.Name = "btnExecute";
+            btnExecute.Size = new Size(140, 40);
+            btnExecute.TabIndex = 6;
+            btnExecute.Text = "🔍 Execute Query";
+            btnExecute.UseVisualStyleBackColor = false;
+            // 
+            // btnClear
+            // 
+            btnClear.BackColor = Color.LightGray;
+            btnClear.Font = new Font("Segoe UI", 9.5F);
+            btnClear.Location = new Point(430, 80);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(140, 35);
+            btnClear.TabIndex = 7;
+            btnClear.Text = "🗑 Clear";
+            btnClear.UseVisualStyleBackColor = false;
+            // 
+            // dgvResults
+            // 
+            dgvResults.AllowUserToAddRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(245, 245, 245);
+            dgvResults.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvResults.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvResults.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvResults.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvResults.ColumnHeadersHeight = 29;
+            dgvResults.EnableHeadersVisualStyles = false;
+            dgvResults.Font = new Font("Segoe UI", 9.25F);
+            dgvResults.Location = new Point(15, 160);
+            dgvResults.Name = "dgvResults";
+            dgvResults.ReadOnly = true;
+            dgvResults.RowHeadersWidth = 51;
+            dgvResults.Size = new Size(950, 420);
+            dgvResults.TabIndex = 1;
+            // 
+            // lblStatus
+            // 
+            lblStatus.AutoSize = true;
+            lblStatus.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblStatus.ForeColor = Color.Green;
+            lblStatus.Location = new Point(20, 595);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(57, 21);
+            lblStatus.TabIndex = 2;
+            lblStatus.Text = "Ready";
+            // 
+            // QueryForm
+            // 
+            BackColor = Color.WhiteSmoke;
+            ClientSize = new Size(980, 630);
+            Controls.Add(grpSearch);
+            Controls.Add(dgvResults);
+            Controls.Add(lblStatus);
+            Font = new Font("Segoe UI", 9.5F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Name = "QueryForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            grpSearch.ResumeLayout(false);
+            grpSearch.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvResults).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
     }
 }

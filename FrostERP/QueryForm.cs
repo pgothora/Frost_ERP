@@ -19,16 +19,6 @@ namespace FrostERP.Inventory
         {
             this.Text = "FrostERP → Inventory Query & Lookup";
 
-            // Populate Query Types
-            cmbQueryType.Items.AddRange(new string[]
-            {
-                "Product Information",
-                "Stock Level",
-                "Product by Category",
-                "Low Stock Items"
-            });
-            cmbQueryType.SelectedIndex = 0;
-
             // Load Warehouses
             LoadWarehouses();
 
@@ -45,10 +35,8 @@ namespace FrostERP.Inventory
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string sql = @"SELECT DISTINCT WarehouseLocation 
-                                   FROM Inventory 
-                                   WHERE WarehouseLocation IS NOT NULL 
-                                   ORDER BY WarehouseLocation";
+                    string sql = @"SELECT WarehouseName
+                                   FROM Warehouses";
 
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -58,7 +46,7 @@ namespace FrostERP.Inventory
 
                         while (reader.Read())
                         {
-                            string wh = reader["WarehouseLocation"].ToString().Trim();
+                            string wh = reader["WarehouseName"].ToString().Trim();
                             if (!string.IsNullOrEmpty(wh))
                                 cmbWarehouse.Items.Add(wh);
                         }
@@ -74,20 +62,19 @@ namespace FrostERP.Inventory
 
         private void btnExecute_Click(object sender, EventArgs e)
         {
-            ExecuteQuery(cmbQueryType.Text, txtSearchValue.Text, cmbWarehouse.Text);
+            ExecuteQuery(txtSearchValue.Text, cmbWarehouse.Text);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtSearchValue.Clear();
-            cmbQueryType.SelectedIndex = 0;
             cmbWarehouse.SelectedIndex = 0;
             dgvResults.DataSource = null;
             lblStatus.Text = "Ready";
             lblStatus.ForeColor = System.Drawing.Color.Green;
         }
 
-        private void ExecuteQuery(string queryType, string searchValue, string warehouseFilter)
+        private void ExecuteQuery(string searchValue, string warehouseFilter)
         {
             try
             {
@@ -97,69 +84,21 @@ namespace FrostERP.Inventory
 
                     string sql = "";
 
-                    switch (queryType)
-                    {
-                        case "Product Information":
-                            sql = @"SELECT
-                                        ProductID,
-                                        SKU,
-                                        ProductName,
-                                        Color,
-                                        Width,
-                                        Length,
-                                        Height,
-                                        Weight,
-                                        Grade,
-                                        SellingPrice,
-                                        IsDangerousGoods
-                                     FROM Products
-                                     WHERE (SKU LIKE @search OR ProductName LIKE @search)";
-                            break;
-
-                        case "Stock Level":
-                            sql = @"SELECT 
-                                        p.ProductID,
-                                        p.SKU,
-                                        p.ProductName,
-                                        i.QuantityInStock,
-                                        i.WarehouseLocation,
-                                        (i.QuantityInStock - COALESCE(p.ReorderLevel, 0)) as StockStatus
-                                    FROM Products p 
-                                    INNER JOIN Inventory i ON p.ProductID = i.ProductID 
-                                    WHERE (p.SKU LIKE @search OR p.ProductName LIKE @search)";
-                            break;
-
-                        case "Product by Category":
-                            sql = @"SELECT 
-                                        p.ProductID,
-                                        p.SKU,
-                                        p.ProductName,
-                                        c.CategoryName,
-                                        p.SellingPrice,
-                                        i.QuantityInStock,
-                                        i.WarehouseLocation
-                                    FROM Products p 
-                                    INNER JOIN Categories c ON p.CategoryID = c.CategoryID
-                                    INNER JOIN Inventory i ON p.ProductID = i.ProductID
-                                    WHERE (p.SKU LIKE @search OR p.ProductName LIKE @search)
-                                      AND c.CategoryName LIKE @search";
-                            break;
-
-                        case "Low Stock Items":
-                            sql = @"SELECT 
-                                        p.ProductID,
-                                        p.SKU,
-                                        p.ProductName,
-                                        i.QuantityInStock,
-                                        p.ReorderLevel,
-                                        (p.ReorderLevel - i.QuantityInStock) as Shortage,
-                                        i.WarehouseLocation
-                                    FROM Products p 
-                                    INNER JOIN Inventory i ON p.ProductID = i.ProductID 
-                                    WHERE i.QuantityInStock < COALESCE(p.ReorderLevel, 0)
-                                      AND (p.SKU LIKE @search OR p.ProductName LIKE @search)";
-                            break;
-                    }
+                    sql = @"SELECT
+                            p.SKU,
+                            p.ProductName,
+                            p.Color,
+                            p.Grade,
+                            i.Quantity,
+                            p.Width,
+                            p.Length,
+                            p.Height,
+                            p.Weight,
+                            p.IsDangerousGoods
+                            FROM InventoryStock i
+                            INNER JOIN Products p ON p.ProductID = i.ProductID
+                            WHERE i.WarehouseID = 1
+                            AND (p.SKU LIKE @search OR p.ProductName LIKE @search)";
 
                     // Apply Warehouse Filter (if not "All Warehouses")
                     if (!string.IsNullOrWhiteSpace(warehouseFilter) && warehouseFilter != "All Warehouses")
@@ -168,7 +107,7 @@ namespace FrostERP.Inventory
                     }
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@search", "%" + (string.IsNullOrWhiteSpace(searchValue) ? "" : searchValue) + "%");
+                    cmd.Parameters.AddWithValue("@search", "%" + (string.IsNullOrWhiteSpace(searchValue) ? "" : searchValue));
 
                     if (!string.IsNullOrWhiteSpace(warehouseFilter) && warehouseFilter != "All Warehouses")
                     {
